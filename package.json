@@ -21,20 +21,17 @@
         "node": ">= 20.x"
     },
     "packageManager": "^npm@10.5.0",
-    "repository": {
-      "type": "git",
-      "url": "git://github.com/quazex/nestjs-learning.git"
-    },
+    "repository": "quazex/nestjs-learning.git",
     "scripts": {
         "bundle:compile": "turbo bundle:compile",
+        "commit": "git-cz",
         "dev:check": "turbo dev:check",
         "dev:format": "turbo dev:format",
         "dev:lint": "turbo dev:lint",
         "dev:test": "turbo dev:test",
         "dev:upgrade": "turbo dev:upgrade",
         "pack:format": "syncpack format",
-        "pack:lint": "syncpack lint",
-        "commit": "git-cz"
+        "pack:lint": "syncpack lint"
     },
     "workspaces": [
         "articles/**"
