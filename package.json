@@ -1,0 +1,42 @@
+{
+    "name": "@quazex/nestjs-opensearch",
+    "description": "Learning nestjs best practice with Quazex",
+    "version": "0.0.0",
+    "author": "Alexander Smirnov",
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    },
+    "devDependencies": {
+        "@nestjs/cli": "10.4.8",
+        "commitizen": "4.3.1",
+        "cz-conventional-changelog": "3.3.0",
+        "rimraf": "6.0.1",
+        "syncpack": "12.3.2",
+        "turbo": "2.3.1",
+        "typescript": "5.4.5"
+    },
+    "engines": {
+        "node": ">= 20.x"
+    },
+    "packageManager": "^npm@10.5.0",
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/quazex/nestjs-learning.git"
+    },
+    "scripts": {
+        "bundle:compile": "turbo bundle:compile",
+        "dev:check": "turbo dev:check",
+        "dev:format": "turbo dev:format",
+        "dev:lint": "turbo dev:lint",
+        "dev:test": "turbo dev:test",
+        "dev:upgrade": "turbo dev:upgrade",
+        "pack:format": "syncpack format",
+        "pack:lint": "syncpack lint",
+        "commit": "git-cz"
+    },
+    "workspaces": [
+        "articles/**"
+    ]
+}
