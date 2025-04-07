@@ -1,8 +1,8 @@
 import { applyDecorators } from '@nestjs/common';
 import { EventPattern } from '@nestjs/microservices';
-import { KafkaServerTransport } from './server.transport';
+import { KafkaConsumerTransport } from './consumer.transport';
 
 export const KafkaPattern = (topic: string): MethodDecorator => {
-    const decorator = EventPattern(topic, KafkaServerTransport);
+    const decorator = EventPattern(topic, KafkaConsumerTransport);
     return applyDecorators(decorator);
 };

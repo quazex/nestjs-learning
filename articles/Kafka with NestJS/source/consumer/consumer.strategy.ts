@@ -4,21 +4,21 @@ import { NO_EVENT_HANDLER } from '@nestjs/microservices/constants';
 import { Consumer, EachBatchPayload } from 'kafkajs';
 import { isObservable, lastValueFrom } from 'rxjs';
 import { KafkaPayload } from '../shared/kafka.payload';
-import { KafkaContext } from './server.context';
-import { KafkaServerToken } from './server.tokens';
-import { KafkaServerTransport } from './server.transport';
-import { KafkaServerConfig } from './server.types';
+import { KafkaContext } from './consumer.context';
+import { KafkaConsumerToken } from './consumer.tokens';
+import { KafkaConsumerTransport } from './consumer.transport';
+import { KafkaConsumerConfig } from './consumer.types';
 
 @Injectable()
-export class KafkaServerStrategy extends Server implements CustomTransportStrategy {
-    public readonly logger = new Logger(KafkaServerStrategy.name);
-    public readonly transportId = KafkaServerTransport;
+export class KafkaConsumerStrategy extends Server implements CustomTransportStrategy {
+    public readonly logger = new Logger(KafkaConsumerStrategy.name);
+    public readonly transportId = KafkaConsumerTransport;
 
     private readonly payload = new KafkaPayload();
 
     constructor(
-        @Inject(KafkaServerToken.config) private readonly config: KafkaServerConfig,
-        @Inject(KafkaServerToken.consumer) private readonly consumer: Consumer,
+        @Inject(KafkaConsumerToken.config) private readonly config: KafkaConsumerConfig,
+        @Inject(KafkaConsumerToken.consumer) private readonly consumer: Consumer,
     ) {
         super();
     }
@@ -31,7 +31,7 @@ export class KafkaServerStrategy extends Server implements CustomTransportStrate
             return;
         }
 
-        const messages = payload.batch.messages.map((msg) => this.payload.parse(msg));
+        const messages = payload.batch.messages.map((msg) => this.payload.parse(msg.value));
         const latest = payload.batch.lastOffset();
 
         const context = new KafkaContext([

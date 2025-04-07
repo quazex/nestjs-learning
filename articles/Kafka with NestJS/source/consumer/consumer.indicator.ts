@@ -1,20 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Consumer, ConsumerGroupState } from 'kafkajs';
-import { KafkaServerToken } from './server.tokens';
-import { KafkaServerHealth } from './server.types';
+import { KafkaConsumerToken } from './consumer.tokens';
+import { KafkaConsumerHealth } from './consumer.types';
 
 @Injectable()
-export class KafkaServerIndicator {
+export class KafkaConsumerIndicator {
     private readonly success = new Set<ConsumerGroupState>([
         'PreparingRebalance',
         'CompletingRebalance',
         'Stable',
     ]);
 
-    constructor(@Inject(KafkaServerToken.consumer) private readonly consumer: Consumer) {}
+    constructor(@Inject(KafkaConsumerToken.consumer) private readonly consumer: Consumer) {}
 
-    public async isHealthy(): Promise<KafkaServerHealth> {
-        const indicator: KafkaServerHealth = {
+    public async isHealthy(): Promise<KafkaConsumerHealth> {
+        const indicator: KafkaConsumerHealth = {
             isHealthy: true,
             status: 'Stable',
         };

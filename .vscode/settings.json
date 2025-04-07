@@ -2,8 +2,11 @@
     "cSpell.words": [
         "clickhouse",
         "healthcheck",
+        "Injactable",
         "kafkajs",
         "opensearch",
+        "partitioner",
+        "partitioners",
         "quazex",
         "rabbitmq",
         "smirnov",

@@ -1,12 +1,11 @@
 import { BaseRpcContext } from '@nestjs/microservices';
 import { Batch } from 'kafkajs';
-import { KafkaServerContextArgs } from './server.types';
+import { KafkaConsumerContextArgs } from './consumer.types';
 
-export class KafkaContext<TData = unknown> extends BaseRpcContext<KafkaServerContextArgs<TData>> {
+export class KafkaContext<TData = unknown> extends BaseRpcContext<KafkaConsumerContextArgs<TData>> {
     /**
      * Get array of decoded messages
-     *
-     * @returns Array of messages
+     * @returns Array of decoded messages
      */
     public getMessages(): TData[] {
         return this.args[0];

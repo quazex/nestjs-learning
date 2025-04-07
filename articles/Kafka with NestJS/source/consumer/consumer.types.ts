@@ -1,8 +1,8 @@
 import { AdminConfig, Batch, ConsumerConfig, KafkaConfig } from 'kafkajs';
 
-export type KafkaServerContextArgs<TData = unknown> = [TData[], Batch];
+export type KafkaConsumerContextArgs<TData = unknown> = [TData[], Batch];
 
-export interface KafkaServerConfig {
+export interface KafkaConsumerConfig {
     connection: KafkaConfig;
     consumer: ConsumerConfig;
     admin?: AdminConfig;
@@ -18,7 +18,7 @@ export interface KafkaServerConfig {
     concurrency?: number;
 }
 
-export interface KafkaServerHealth {
+export interface KafkaConsumerHealth {
     isHealthy: boolean;
     status: string;
 }
