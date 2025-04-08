@@ -3,8 +3,8 @@ import { CustomTransportStrategy, Server } from '@nestjs/microservices';
 import { NO_EVENT_HANDLER } from '@nestjs/microservices/constants';
 import { Consumer, EachBatchPayload } from 'kafkajs';
 import { isObservable, lastValueFrom } from 'rxjs';
-import { KafkaPayload } from '../shared/kafka.payload';
-import { KafkaContext } from './consumer.context';
+import { KafkaConverter } from '../shared/kafka.converter';
+import { KafkaConsumerContext } from './consumer.context';
 import { KafkaConsumerToken } from './consumer.tokens';
 import { KafkaConsumerTransport } from './consumer.transport';
 import { KafkaConsumerConfig } from './consumer.types';
@@ -14,7 +14,7 @@ export class KafkaConsumerStrategy extends Server implements CustomTransportStra
     public readonly logger = new Logger(KafkaConsumerStrategy.name);
     public readonly transportId = KafkaConsumerTransport;
 
-    private readonly payload = new KafkaPayload();
+    private readonly converter = new KafkaConverter();
 
     constructor(
         @Inject(KafkaConsumerToken.config) private readonly config: KafkaConsumerConfig,
@@ -31,10 +31,10 @@ export class KafkaConsumerStrategy extends Server implements CustomTransportStra
             return;
         }
 
-        const messages = payload.batch.messages.map((msg) => this.payload.parse(msg.value));
+        const messages = payload.batch.messages.map((msg) => this.converter.parse(msg.value));
         const latest = payload.batch.lastOffset();
 
-        const context = new KafkaContext([
+        const context = new KafkaConsumerContext([
             messages,
             payload.batch,
         ]);

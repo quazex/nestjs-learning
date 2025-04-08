@@ -4,6 +4,7 @@ export * from './consumer.indicator';
 export * from './consumer.interfaces';
 export * from './consumer.module';
 export * from './consumer.pattern';
+export * from './consumer.payload';
 export * from './consumer.strategy';
 export * from './consumer.tokens';
 export * from './consumer.types';

@@ -16,5 +16,6 @@ module.exports = {
             'ignoreComments': true,
             'SwitchCase': 1,
         }],
+        'init-declarations': ['off'],
     },
 }

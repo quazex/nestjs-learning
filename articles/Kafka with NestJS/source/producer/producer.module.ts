@@ -42,6 +42,9 @@ export class KafkaProducerModule implements OnApplicationBootstrap, OnApplicatio
                 KafkaProducerIndicator,
             ],
             exports: [
+                KafkaConnectionProvider,
+                KafkaProducerProvider,
+                KafkaAdminProvider,
                 KafkaProducerClient,
                 KafkaProducerIndicator,
             ],
@@ -68,6 +71,9 @@ export class KafkaProducerModule implements OnApplicationBootstrap, OnApplicatio
                 KafkaProducerIndicator,
             ],
             exports: [
+                KafkaConnectionProvider,
+                KafkaProducerProvider,
+                KafkaAdminProvider,
                 KafkaProducerClient,
                 KafkaProducerIndicator,
             ],

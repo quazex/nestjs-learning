@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { Message, Producer } from 'kafkajs';
-import { KafkaPayload } from '../shared/kafka.payload';
+import { KafkaConverter } from '../shared/kafka.converter';
 import { InjectKafkaProducer } from './producer.decorators';
 import { KafkaProducerMessage } from './producer.types';
 
 @Injectable()
 export class KafkaProducerClient {
-    private readonly payload = new KafkaPayload();
+    private readonly converter = new KafkaConverter();
 
     constructor(
         @InjectKafkaProducer() private readonly producer: Producer,
@@ -18,7 +18,7 @@ export class KafkaProducerClient {
      */
     public async send<TData>(message: KafkaProducerMessage<TData>): Promise<void> {
         const payload = message.payload.map<Message>((payload) => ({
-            value: this.payload.encode(payload),
+            value: this.converter.encode(payload),
         }));
 
         await this.producer.send({

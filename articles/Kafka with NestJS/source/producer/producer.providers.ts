@@ -74,8 +74,8 @@ export class KafkaProducerProviders {
         return {
             provide: KafkaProducerToken.admin,
             useFactory: (
-                connection: Kafka,
                 config: KafkaProducerConfig,
+                connection: Kafka,
             ): Admin => {
                 const admin = connection.admin(config.admin);
                 return admin;
