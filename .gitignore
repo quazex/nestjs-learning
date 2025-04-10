@@ -1,6 +1,10 @@
 # Build
 lib
 
+*.result.csv
+*.result.json
+*.result.jsonl
+
 # Mac files
 .DS_Store
 

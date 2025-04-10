@@ -3,10 +3,13 @@
         "clickhouse",
         "healthcheck",
         "kafkajs",
+        "luxon",
         "opensearch",
         "quazex",
         "rabbitmq",
         "smirnov",
-        "syncpack"
+        "stringifier",
+        "syncpack",
+        "unzipper"
     ]
 }
