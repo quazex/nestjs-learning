@@ -20,9 +20,19 @@ describe('CSV', () => {
         const csvDecoder = new Parser({});
         const target = new CsvWritable();
 
-        await pipeline(fileSource.data, csvDecoder, target);
+        /**
+         * STEPS:
+         * 1. Stream of data from url
+         * 2. Parse data to CSV rows
+         * 3. Count rows
+         */
+        await pipeline(
+            fileSource.data,
+            csvDecoder,
+            target,
+        );
 
-        expect(target.total).toBeGreaterThan(0);
+        expect(target.total).toBe(48_896);
         expect(target.duration).toBeGreaterThan(0);
     });
 
@@ -44,6 +54,15 @@ describe('CSV', () => {
         const resultPath = join(__dirname, 'transform.result.csv');
         const target = createWriteStream(resultPath);
 
+        /**
+         * STEPS:
+         * 1. Stream of data from url
+         * 2. Parse data to CSV rows
+         * 3. Count rows
+         * 4. Rows transformer
+         * 5. Convert to CSV
+         * 6. Write to filesystem
+         */
         await pipeline(
             fileSource.data,
             csvDecoder,
@@ -53,7 +72,7 @@ describe('CSV', () => {
             target,
         );
 
-        expect(rowsCounter.total).toBeGreaterThan(0);
+        expect(rowsCounter.total).toBe(4_600);
         expect(rowsCounter.duration).toBeGreaterThan(0);
     });
 });
