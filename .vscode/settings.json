@@ -4,12 +4,15 @@
         "healthcheck",
         "Injactable",
         "kafkajs",
+        "luxon",
         "opensearch",
         "partitioner",
         "partitioners",
         "quazex",
         "rabbitmq",
         "smirnov",
-        "syncpack"
+        "stringifier",
+        "syncpack",
+        "unzipper"
     ]
 }
