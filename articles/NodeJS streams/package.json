@@ -1,0 +1,43 @@
+{
+    "name": "@quazex/node-streams",
+    "description": "NodeJS streams tutorial",
+    "version": "1.0.0",
+    "author": "Alexander Smirnov",
+    "devDependencies": {
+        "@faker-js/faker": "9.6.0",
+        "@jest/globals": "29.7.0",
+        "@quazex/eslint-config": "1.0.3",
+        "@testcontainers/mongodb": "10.24.2",
+        "@types/luxon": "3.4.2",
+        "@types/stream-json": "1.7.8",
+        "@types/unzipper": "0.10.10",
+        "axios": "1.7.7",
+        "csv-parse": "5.6.0",
+        "csv-stringify": "6.5.2",
+        "jest": "29.7.0",
+        "luxon": "3.6.1",
+        "mongodb": "6.15.0",
+        "stream-json": "1.9.1",
+        "testcontainers": "10.24.2",
+        "ts-jest": "29.3.0",
+        "ts-node": "10.9.2",
+        "typescript": "5.4.5",
+        "unzipper": "0.12.3"
+    },
+    "keywords": [
+        "node",
+        "nodejs",
+        "streams",
+        "typescript"
+    ],
+    "scripts": {
+        "build:clear": "rimraf lib",
+        "build:compile": "npm run build:clear && tsc --project tsconfig.build.json",
+        "commit": "git-cz",
+        "dev:check": "tsc --noEmit",
+        "dev:format": "npm run dev:lint -- --fix",
+        "dev:lint": "eslint ./source --ext .ts",
+        "dev:test": "jest",
+        "dev:watch": "tsc --watch"
+    }
+}
