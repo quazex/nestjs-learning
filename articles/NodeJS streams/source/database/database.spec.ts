@@ -29,7 +29,7 @@ describe('Database', () => {
         await container.stop();
     });
 
-    test('Download and write files from jsonl file', async() => {
+    test('Download, insert and stream documents from Mongodb', async() => {
         //
         // WRITE
         //

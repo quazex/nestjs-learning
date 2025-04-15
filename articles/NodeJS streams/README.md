@@ -42,7 +42,7 @@ https://github.com/quazex/nestjs-learning/blob/150f0e173d8f73d7c1b0d5b6193f15a0c
 1. Конвертируем обратно в CSV;
 1. Записываем на диск.
 
-https://github.com/quazex/nestjs-learning/blob/150f0e173d8f73d7c1b0d5b6193f15a0c874150c/articles/NodeJS%20streams/source/csv/csv.spec.ts#L39-L76
+https://github.com/quazex/nestjs-learning/blob/150f0e173d8f73d7c1b0d5b6193f15a0c874150c/articles/NodeJS%20streams/source/csv/csv.spec.ts#L39-L77
 
 В реальном приложении рекомендуется сохранять файлы в S3 совместимом хранилище, клиенты которого также поддерживают загрузку файла из стрима. Также, для оптимизации используемого места на диске в пайплайн можно добавить стрим сжатия `createGzip()`, который основан на `Transform` стриме и доступен в стандартном модуле `zlib`.
 
@@ -56,7 +56,7 @@ https://github.com/quazex/nestjs-learning/blob/89a7c19eb81943d928b4690cc886394f4
 
 Второй пример отличается нестандартным подходом к обработке JSON массива объектов, который достигается комбинацией стримов из пакета `stream-json`. Идея заключается в том, что мы можем стримить стандартный JSON массив без полной загрузки файла и в каждом чанке получать объект из массива. С деталями реализации подхода можно ознакомиться в [документации](https://github.com/uhop/stream-json) пакета `stream-json`, но такой подход может оказаться особенно полезным при работе с большими JSON структурами без дополнительной нагрузки на память приложения.
 
-https://github.com/quazex/nestjs-learning/blob/89a7c19eb81943d928b4690cc886394f4bdc7092/articles/NodeJS%20streams/source/json/json.spec.ts#L37-L66
+https://github.com/quazex/nestjs-learning/blob/89a7c19eb81943d928b4690cc886394f4bdc7092/articles/NodeJS%20streams/source/json/json.spec.ts#L37-L67
 
 ## База данных
 
@@ -71,7 +71,7 @@ https://github.com/quazex/nestjs-learning/blob/89a7c19eb81943d928b4690cc886394f4
     * Если выше - запускаем вставку данных в базу данных и очищаем буфер;
 * В конце потока проверяем буфер и если осталось немного записей, то записываем их в базу и чистим буфер.
 
-https://github.com/quazex/nestjs-learning/blob/89a7c19eb81943d928b4690cc886394f4bdc7092/articles/NodeJS%20streams/source/database/database.spec.ts#L32-L89
+https://github.com/quazex/nestjs-learning/blob/89a7c19eb81943d928b4690cc886394f4bdc7092/articles/NodeJS%20streams/source/database/database.spec.ts#L32-L90
 
 ## Другие фишки
 
@@ -82,7 +82,7 @@ https://github.com/quazex/nestjs-learning/blob/89a7c19eb81943d928b4690cc886394f4
 - Базовые классы стримов можно описать в аргументах конструктора, что может быть удобным для описания небольшой логики без наследования;
 - У стримов есть полезные хуки (могут возвращать `Promise`), которые срабатывают в начале потока и после его окончания (например, можно очистить внутренний буфер в конце потока);
 
-https://github.com/quazex/nestjs-learning/blob/89a7c19eb81943d928b4690cc886394f4bdc7092/articles/NodeJS%20streams/source/tricks/tricks.spec.ts#L10-L89
+https://github.com/quazex/nestjs-learning/blob/89a7c19eb81943d928b4690cc886394f4bdc7092/articles/NodeJS%20streams/source/tricks/tricks.spec.ts#L10-L90
 
 ## Заключение
 
