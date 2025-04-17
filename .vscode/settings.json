@@ -13,6 +13,9 @@
         "smirnov",
         "stringifier",
         "syncpack",
-        "unzipper"
+        "unzipper",
+        "консюмер",
+        "консюмера",
+        "микросервиса"
     ]
 }

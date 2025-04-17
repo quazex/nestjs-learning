@@ -7,5 +7,12 @@
         "program": "${workspaceRoot}/node_modules/.bin/jest",
         "args": ["--i", "--config", "${workspaceRoot}/articles/NodeJS streams/jest.config.js"],
         "cwd": "${workspaceRoot}/articles/NodeJS streams"
+    }, {
+        "name": "Jest Kafka",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceRoot}/node_modules/.bin/jest",
+        "args": ["--i", "--config", "${workspaceRoot}/articles/Kafka with NestJS/jest.config.js"],
+        "cwd": "${workspaceRoot}/articles/Kafka with NestJS"
     }]
 }
