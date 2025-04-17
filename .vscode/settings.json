@@ -2,14 +2,20 @@
     "cSpell.words": [
         "clickhouse",
         "healthcheck",
+        "Injactable",
         "kafkajs",
         "luxon",
         "opensearch",
+        "partitioner",
+        "partitioners",
         "quazex",
         "rabbitmq",
         "smirnov",
         "stringifier",
         "syncpack",
-        "unzipper"
+        "unzipper",
+        "консюмер",
+        "консюмера",
+        "микросервиса"
     ]
 }
