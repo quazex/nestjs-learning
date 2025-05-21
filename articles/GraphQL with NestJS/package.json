@@ -1,0 +1,53 @@
+{
+    "name": "@quazex/nestjs-graphql",
+    "description": "NestJS integration with GraphQL",
+    "version": "1.0.0",
+    "author": "Alexander Smirnov",
+    "devDependencies": {
+        "@apollo/server": "4.12.1",
+        "@faker-js/faker": "9.6.0",
+        "@jest/globals": "29.7.0",
+        "@nestjs/apollo": "12.2.2",
+        "@nestjs/core": "10.4.15",
+        "@nestjs/common": "10.4.15",
+        "@nestjs/graphql": "12.2.2",
+        "@nestjs/platform-express": "10.4.15",
+        "@nestjs/testing": "10.4.15",
+        "@quazex/eslint-config": "1.0.3",
+        "@types/luxon": "3.4.2",
+        "class-validator": "0.14.1",
+        "class-transformer": "0.5.1",
+        "commitizen": "4.3.1",
+        "cz-conventional-changelog": "3.3.0",
+        "env-var": "7.5.0",
+        "dotenv": "16.5.0",
+        "graphql": "16.11.0",
+        "jest": "29.7.0",
+        "luxon": "3.5.0",
+        "reflect-metadata": "0.2.2",
+        "rxjs": "7.8.2",
+        "rimraf": "6.0.1",
+        "ts-jest": "29.3.0",
+        "ts-node": "10.9.2",
+        "type-fest": "4.39.1",
+        "typescript": "5.4.5"
+    },
+    "keywords": [
+        "graphql",
+        "nest",
+        "nestjs",
+        "node",
+        "nodejs",
+        "typescript"
+    ],
+    "scripts": {
+        "build:clear": "rimraf lib",
+        "build:compile": "npm run build:clear && tsc --project tsconfig.build.json",
+        "commit": "git-cz",
+        "dev:check": "tsc --noEmit",
+        "dev:format": "npm run dev:lint -- --fix",
+        "dev:lint": "eslint ./source --ext .ts",
+        "dev:test": "jest",
+        "dev:watch": "tsc --watch"
+    }
+}
