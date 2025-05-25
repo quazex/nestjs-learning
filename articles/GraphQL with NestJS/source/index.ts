@@ -1,10 +1,16 @@
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { AppConfig } from './configs/app.config';
 
 const bootstrap = async(): Promise<void> => {
-    const app = await NestFactory.create(AppModule);
+    const fastifyAdapter = new FastifyAdapter();
+
+    const app = await NestFactory.create<NestFastifyApplication>(
+        AppModule,
+        fastifyAdapter,
+    );
 
     const config = app.get(AppConfig);
     const pipe = new ValidationPipe({
@@ -15,10 +21,7 @@ const bootstrap = async(): Promise<void> => {
     app.useGlobalPipes(pipe);
     app.enableShutdownHooks();
 
-    app.setGlobalPrefix('api');
-    app.enableVersioning({
-        type: VersioningType.URI,
-    });
+    app.enableCors();
 
     await app.listen(config.port, '0.0.0.0');
 };

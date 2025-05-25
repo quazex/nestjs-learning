@@ -1,10 +1,12 @@
 {
     "cSpell.words": [
+        "autoincrement",
         "clickhouse",
         "healthcheck",
         "Injactable",
         "kafkajs",
         "luxon",
+        "mikro",
         "opensearch",
         "partitioner",
         "partitioners",
@@ -13,6 +15,7 @@
         "smirnov",
         "stringifier",
         "syncpack",
+        "timestamptz",
         "unzipper",
         "консюмер",
         "консюмера",

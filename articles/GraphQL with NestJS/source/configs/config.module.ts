@@ -6,6 +6,7 @@ import { parse } from 'dotenv';
 import { from } from 'env-var';
 import { AppConfig } from './app.config';
 import { CONFIG_TOKEN } from './config.tokens';
+import { DatabaseConfig } from './database.config';
 import { GraphqlConfig } from './graphql.config';
 
 export class ConfigModule {
@@ -23,7 +24,7 @@ export class ConfigModule {
                     const raw = await readFile(path, 'utf8');
                     const dotenv = parse(raw);
 
-                    Object.assign(process.env, dotenv);
+                    Object.assign(env, dotenv);
                 }
 
                 return from(env);
@@ -32,8 +33,8 @@ export class ConfigModule {
         return {
             module: ConfigModule,
             global: true,
-            providers: [AppConfig, GraphqlConfig, envProvider],
-            exports: [AppConfig, GraphqlConfig],
+            providers: [AppConfig, DatabaseConfig, GraphqlConfig, envProvider],
+            exports: [AppConfig, DatabaseConfig, GraphqlConfig],
         };
     }
 }

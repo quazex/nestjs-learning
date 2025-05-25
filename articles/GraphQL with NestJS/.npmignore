@@ -1,0 +1,72 @@
+# Исключаем директории разработки
+node_modules
+coverage/
+dist/
+build/
+tmp/
+temp/
+logs/
+
+# Исключаем файлы конфигурации и служебные
+*.log
+*.tsbuildinfo
+.env
+.env.*
+.vscode/
+.idea/
+*.swp
+
+# Docker
+docker*
+
+# Исключаем тесты
+test/
+tests/
+*.spec.*
+*.test.*
+
+# Исключаем документацию и вспомогательные файлы
+README.md
+CHANGELOG.md
+CONTRIBUTING.md
+*.md
+*.markdown
+
+# Исключаем скрипты и конфиги
+*.sh
+*.bat
+*.cmd
+*.ps1
+*.yml
+*.yaml
+*.toml
+*.ini
+*.config.js
+*.config.cjs
+*.config.mjs
+*.config.ts
+*.config.json
+
+# Исключаем исходные файлы TypeScript, если публикуется только компилированный JS
+src/
+
+# Исключаем lint-файлы
+.eslintrc
+.eslintrc.*
+.prettierrc
+.prettierrc.*
+.stylelintrc
+.stylelintrc.*
+.editorconfig
+
+# Исключаем примеры и демо
+example/
+examples/
+demo/
+demos/
+
+# Исключаем CI/CD
+.github/
+.gitlab/
+.circleci/
+.git/
