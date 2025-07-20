@@ -1,90 +1,66 @@
-# NestJS Umzug
+# Кастомные миграции для NestJS и Kafka
 
-A module for updating database content using [Umzug](https://github.com/sequelize/umzug).
+Многие приложения на NestJS используют различные базы для хранения данных. Любой проект с высокой динамикой развития требует постоянно вносить изменения в данные, поэтому разработчикам сервисов нужны инструменты для обновления структуры данных во внешних хранилищах.
 
-The key idea is to create a separate entry point in a single application using a CLI. This allows you to separate the full server startup with all dependencies from the database content management module. You can find a ready-made implementation in the `examples` folder of the library.
+## Введение
 
-### Key Features:
+Основная цель статьи заключается в демонстрации подходов при решении задач, которые выходят за рамки готовых решений. Мы будем создавать собственное решения для миграций с помощью популярной библиотеки [Umzug](https://github.com/sequelize/umzug).
 
-* Implemented as a NestJS module;
-* Supports DI and other third-party NestJS modules;
-* Supports Unit and E2E testing;
-* Full support for TypeScript developer tools and Debugger;
-* Implementation and test examples;
-* Can be used without precompilation;
-* CLI for managing migrations based on [nest-commander](https://github.com/thawankeane/nest-inngest);
-* Migration file generation from a built-in template;
-* Supports persistent storage in Postgres.
+## Задача
 
-## Quick Start
+Давайте представим, что нам необходимо создать сервис, который взаимодействует с несколькими базами данных такими как  Postgres, Clickhouse и OpenSearch. И если для Postgres уже доступны инструменты миграции в рамках популярных ORM, то модули для остальных баз данных не могут похвастаться такими возможностями. Ещё существует интересный кейс, когда нам нужно вносить изменение в сами данные, поэтому миграции могут быть необходимы и для MongoDB.
 
-To create a migration provider, you need to follow these mandatory steps:
+## Мотивация
 
-1. Add the `@Migration()` class decorator;
-2. Specify the `order` parameter to ensure the correct execution order of migrations;
-3. Implement the `IMigrationHandler` interface.
+Почему мы будем создавать собственное решение, которое очень похоже на возможности ORM? Такой подход имеет ряд преимуществ и мы кратко рассмотрим каждое:
+1. Мы хотим запускать миграции для любой базы данных;
+1. Наши миграции могут быть сложными, поэтому мы хотим использовать DI и сторонние модули;
+1. Мы хотим проверять корректность работы миграций с помощью тестов;
+1. Мы хотим отделить логику миграций от запуска основного приложения.
 
-The class name is automatically used as the migration name; otherwise, the class functions like a regular NestJS provider.
+## Реализация
 
-> ⚠️ **Attention:** The migration name must be unique across all migrations!
+После знакомства с основами мы готовы приступить к созданию модуля для NestJS с динамической конфигурацией. Мы будем использовать возможности `nestjs` для поиска классов с методами миграций, а также `umzug` c поддержкой хранилища истории запуска миграций.
 
-```typescript
-import { Migration, MigrationHandler } from '@quazex/nestjs-umzug';
+Мы разделим наш модуль на две ключевые папки, чтобы в дальнейшем гибко адаптировать наши подходы для других баз данных:
+- `migrations` - папка для реализации логики миграций;
+- `postgres` - папка для реализации модуля миграций для Postgres;
 
-@Migration({
-    order: 1, // or timestamp
-})
-export class MyMigrationClass implements MigrationHandler {
-    constructor(private readonly provider: SomeProvider) {}
-
-    async up(): Promise<void> {
-        await provider.create();
-    }
-
-    async down(): Promise<void> {
-        await provider.delete();
-    }
-}
-```
-
-Next, you need to create a file to launch the CLI module and connect all the required providers and modules. Here you can import any modules from the main application that are needed for use in the migrations.
+В первую очередь нам необходимо создать кастомный декоратор, с помощью которого мы будем извлекать классы с методами миграций `up` и `down` для применения изменений к базе данных:
 
 ```typescript
-import { MigrationsFactory, UmzugPostgresModule } from '@quazex/nestjs-umzug';
-import { MyMigrationClass } from './migration';
-import { SomeProvider } from './provider';
+import { SetMetadata } from '@nestjs/common';
+import { MigrationParams } from '../typing/params.interfaces';
+import { UMZUG_METADATA_KEY } from './migrations.tokens';
 
-async function bootstrap() {
-    await MigrationsFactory.init({
-        imports: [
-            UmzugPostgresModule.forRoot({
-                connection: 'postgres://postgres:postgres@localhost:5432/database',
-            }),
-        ],
-        providers: [SomeProvider, MyMigrationClass],
-    });
-}
-
-bootstrap();
+export const Migration = (params: MigrationParams): ClassDecorator => (
+    SetMetadata(UMZUG_METADATA_KEY, params)
+);
 ```
 
-Finally, run the CLI command to execute migrations without building into JS:
+Далее нам необходимо настроить извлечение классов миграций из DI контейнера. Для этого мы будем использовать возможности `DiscoveryService` из пакета `@nestjs/core`. Также, мы опишем кастомный логгер на базе `Logger` из пакета `@nestjs/common`, что позволит гибко управлять глобальными настройками логирования в приложении. Полная структура папки migrations:
 
 ```bash
-ts-node some-path/main.ts migrate up
+migrations/
+    migrations.commands.ts      # Обработки для CLI команд при запуске через nest-commander
+    migrations.decorators.ts    # Декораторы для настройки метадаты в рамках DI контейнера
+    migrations.discovery.ts     # Получение классов миграций из DI
+    migrations.factory.ts       # Фабрика для создания CLI приложения на базе nest-commander
+    migrations.logger.ts        # Адаптер логирования для внедрения Logger в Umzug
+    migrations.template.ts      # Шаблон для генерации классов миграций
+    migrations.tokens.ts        # Токены для управления зависимостями
+    migrations.types.ts         # Различные типы
+
+postgres/
+    postgres.bootstrap.ts       # Методы управления подключением к Postgres
+    postgres.defaults.ts.       # Набор настроек по умолчанию
+    postgres.interfaces.ts      # Типы для динамической конфигурации модуля
+    postgres.migrations.ts      # Набор методов для применения миграций
+    postgres.module.ts          # Модуль для управления зависимостями
+    postgres.providers.ts       # Набор фабрик для генерации Injactable провайдеров
+    postgres.storage.ts         # Хранилище для истории применения миграций
+    postgres.tokens.ts          # Уникальные токены для управления компонентами модуля
+    postgres.types.ts           # Различные типы
 ```
 
-## CLI
-
-The project supports only one `migrate` command with the following arguments:
-
-* `up` - used to run all migrations that have not yet been applied;
-* `down [string]` - used to roll back a list of migrations; you must specify the migration names separated by spaces;
-* `generate` - used to create a migration file from the built-in template.
-
-## Options
-
-* `connection` - URL for connecting to Postgres or a configuration object;
-* `generating` - A set of settings for generating migrations from a template (optional);
-* `generating.path` - Path for the generated files;
-* `table` - the name of the table for storing the migration history.
+Полный рабочий пример доступен по в папке `tests`

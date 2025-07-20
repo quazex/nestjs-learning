@@ -2,7 +2,7 @@ export * from './errors/command.error';
 export * from './errors/duplicate.error';
 export * from './errors/handler.error';
 
-export * from './migrations/migrations.decorator';
+export * from './migrations/migrations.decorators';
 export * from './migrations/migrations.discovery';
 export * from './migrations/migrations.factory';
 export * from './migrations/migrations.logger';
