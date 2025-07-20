@@ -1,0 +1,2 @@
+export const POSTGRES_CONFIG = Symbol('UMZUG_POSTGRES_CONFIG');
+export const POSTGRES_CLIENT = Symbol('UMZUG_POSTGRES_CLIENT');
