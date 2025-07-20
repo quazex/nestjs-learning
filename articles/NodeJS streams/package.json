@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "author": "Alexander Smirnov",
     "devDependencies": {
-        "@faker-js/faker": "9.6.0",
+        "@faker-js/faker": "9.8.0",
         "@jest/globals": "29.7.0",
         "@quazex/eslint-config": "1.0.3",
         "@testcontainers/mongodb": "10.24.2",
@@ -18,10 +18,11 @@
         "luxon": "3.6.1",
         "mongodb": "6.15.0",
         "reflect-metadata": "0.2.2",
+        "rimraf": "6.0.1",
         "rxjs": "7.8.2",
         "stream-json": "1.9.1",
         "testcontainers": "10.24.2",
-        "ts-jest": "29.3.0",
+        "ts-jest": "29.4.0",
         "ts-node": "10.9.2",
         "typescript": "5.4.5",
         "unzipper": "0.12.3"
